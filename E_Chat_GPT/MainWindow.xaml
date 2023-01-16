@@ -1,0 +1,135 @@
+﻿<Window x:Class="E_Chat_GPT.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:E_Chat_GPT"
+        mc:Ignorable="d"
+        xmlns:wv2="clr-namespace:Microsoft.Web.WebView2.Wpf;assembly=Microsoft.Web.WebView2.Wpf"
+        Title="MainWindow" Height="450" Width="800" Loaded="Window_Loaded" Closing="Window_Closing" WindowStyle="None" AllowsTransparency="True" Opacity="0.95">
+
+
+    <Window.Background>
+        <LinearGradientBrush StartPoint="0.5,1" EndPoint="0,1">
+            <GradientStop Color="#FF07090C" Offset="1"/>
+            <GradientStop Color="#FF312E2E"/>
+        </LinearGradientBrush>
+    </Window.Background>
+    
+    
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
+        
+        <Rectangle Grid.ColumnSpan="9" Height="50" VerticalAlignment="Top" MouseDown="Move_The_Window">
+            <Rectangle.Fill>
+                <LinearGradientBrush StartPoint="0.5,1" EndPoint="0,1">
+                    <GradientStop Color="#FF07090C" Offset="1"/>
+                    <GradientStop Color="#FF312E2E"/>
+                </LinearGradientBrush>
+            </Rectangle.Fill>
+        </Rectangle>
+
+        <Button x:Name="Main_Menu_Button" FontFamily="Segoe MDL2 Assets" Content="&#xE700;" FontSize="30" Width="60" Margin="20,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource Red_On_Hover_Margin_Button_Style}" Click="Open_Or_Close_Main_Menu">
+            <Button.Foreground>
+                <LinearGradientBrush StartPoint="0.5,1" EndPoint="0,1">
+                    <GradientStop Color="#FF07090C" Offset="1"/>
+                    <GradientStop Color="#FFD80000"/>
+                </LinearGradientBrush>
+            </Button.Foreground>
+        </Button>
+
+
+        <StackPanel x:Name="Window_Controls" Grid.ColumnSpan="9" Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="10">
+            <Button x:Name="Minimise_Button" FontFamily="Segoe MDL2 Assets" Content="&#xEF2D;" Margin="0,0,20,0" FontSize="20" VerticalAlignment="Center" Style="{StaticResource Red_On_Hover_Margin_Button_Style}" Click="Minimise_Window">
+                <Button.Foreground>
+                    <LinearGradientBrush StartPoint="0.5,1" EndPoint="0,1">
+                        <GradientStop Color="#FF07090C" Offset="1"/>
+                        <GradientStop Color="#FFD80000"/>
+                    </LinearGradientBrush>
+                </Button.Foreground>
+            </Button>
+
+            <Button x:Name="Maximise_Or_Normalise_Button" FontFamily="Segoe MDL2 Assets" Content="&#xEF2E;" Margin="0,0,20,0" FontSize="20" VerticalAlignment="Center" Style="{StaticResource Red_On_Hover_Margin_Button_Style}" Click="Normalise_Or_Maximise_Window">
+                <Button.Foreground>
+                    <LinearGradientBrush StartPoint="0.5,1" EndPoint="0,1">
+                        <GradientStop Color="#FF07090C" Offset="1"/>
+                        <GradientStop Color="#FFD80000"/>
+                    </LinearGradientBrush>
+                </Button.Foreground>
+            </Button>
+
+            <Button x:Name="Close_Button" FontFamily="Segoe MDL2 Assets" Content="&#xEF2C;" Margin="0,0,0,0" FontSize="20" VerticalAlignment="Center" Style="{StaticResource Red_On_Hover_Margin_Button_Style}" Click="Close_Window">
+                <Button.Foreground>
+                    <LinearGradientBrush StartPoint="0.5,1" EndPoint="0,1">
+                        <GradientStop Color="#FF07090C" Offset="1"/>
+                        <GradientStop Color="#FFD80000"/>
+                    </LinearGradientBrush>
+                </Button.Foreground>
+            </Button>
+        </StackPanel>
+
+        
+        <DockPanel x:Name="main_DockPanel" Margin="0,50,0,0" Grid.RowSpan="9" Grid.ColumnSpan="9" Panel.ZIndex="0">
+            <wv2:WebView2 Grid.Row="1" Grid.RowSpan="8" Grid.ColumnSpan="9" x:Name="main" Source="https://chat.openai.com/chat" NavigationCompleted="Main_Navigation_Completed"/>
+        </DockPanel>
+
+        <StackPanel x:Name="Main_Menu" Margin="0,50,0,0" Grid.RowSpan="9" Grid.ColumnSpan="2" HorizontalAlignment="Left" VerticalAlignment="Top" Height="0" Width="100">
+
+            <StackPanel.Background>
+                <LinearGradientBrush StartPoint="0.5,1" EndPoint="0,1">
+                    <GradientStop Color="#FF07090C" Offset="1"/>
+                    <GradientStop Color="#FF312E2E"/>
+                </LinearGradientBrush>
+            </StackPanel.Background>
+            
+            <Button x:Name="PowerShell" Margin="0,30,0,0" HorizontalAlignment="Center" Style="{StaticResource Red_On_Hover_Margin_Button_Style}">
+                <Button.Content>
+                    <Image Width="{Binding ElementName=Main_Menu_Button, Path=ActualWidth}" HorizontalAlignment="Center" Stretch="UniformToFill" Source="PowerShell.png"/>
+                </Button.Content>
+            </Button>
+
+            <Button x:Name="Command_Prompt" Margin="0,30,0,0" HorizontalAlignment="Center" Style="{StaticResource Red_On_Hover_Margin_Button_Style}">
+                <Button.Content>
+                    <Image Width="{Binding ElementName=Main_Menu_Button, Path=ActualWidth}" Stretch="UniformToFill" Source="Command_Prompt.png"/>
+                </Button.Content>
+            </Button>
+
+            <Button x:Name="C_Sharp" Margin="0,30,0,0" HorizontalAlignment="Center" Style="{StaticResource Red_On_Hover_Margin_Button_Style}" Click="Open_C_Sharp_Tools">
+                <Button.Content>
+                    <Image Width="{Binding ElementName=Main_Menu_Button, Path=ActualWidth}" Stretch="UniformToFill" Source="C_Sharp.png"/>
+                </Button.Content>
+            </Button>
+
+            <Button x:Name="Python" Margin="0,30,0,0" HorizontalAlignment="Center" Style="{StaticResource Red_On_Hover_Margin_Button_Style}">
+                <Button.Content>
+                    <Image Width="{Binding ElementName=Main_Menu_Button, Path=ActualWidth}" Stretch="UniformToFill" Source="Python.png"/>
+                </Button.Content>
+            </Button>
+        </StackPanel>
+
+    </Grid>
+
+</Window>
