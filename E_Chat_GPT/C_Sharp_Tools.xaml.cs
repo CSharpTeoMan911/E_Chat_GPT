@@ -41,7 +41,14 @@ namespace E_Chat_GPT
                 C_Sharp_Tools_Window_Opened = Window_Opened;
                 return Task.FromResult(true);
             }
+
+            public static async Task<bool> Compile_C_Sharp_Code(string Code)
+            {
+                return await C_Sharp_Code_Compilation(Code);
+            }
         }
+
+
 
         public C_Sharp_Tools()
         {
@@ -289,7 +296,7 @@ namespace E_Chat_GPT
             }
         }
 
-        private void Compile_Code(object sender, RoutedEventArgs e)
+        private async void Compile_Code(object sender, RoutedEventArgs e)
         {
             if (Application.Current != null)
             {
@@ -303,57 +310,7 @@ namespace E_Chat_GPT
                             {
                                 if (Window_Is_Closing == false)
                                 {
-                                    CSharpCodeProvider compiler = new CSharpCodeProvider();
-
-                                    #pragma warning disable CS0618 // Type or member is obsolete
-                                    ICodeCompiler compiler_interface = compiler.CreateCompiler();
-                                    #pragma warning restore CS0618 // Type or member is obsolete
-
-                                    string compilation_output = "Test_Compilation.exe";
-
-                                    CompilerParameters parameters = new CompilerParameters();
-
-
-                                    parameters.ReferencedAssemblies.AddRange(Assembly.GetExecutingAssembly().GetReferencedAssemblies().Select(a => 
-                                    {
-                                        if (a.Name == "PresentationCore")
-                                            return "WPF\\" + a.Name + ".dll";
-
-                                        else if (a.Name == "PresentationFramework")
-                                            return "WPF\\" + a.Name + ".dll";
-
-                                        else if (a.Name == "WindowsBase")
-                                            return "WPF\\" + a.Name + ".dll";
-
-                                        else
-                                            return a.Name + ".dll";
-                                    }).ToArray());
-
-
-                                    parameters.GenerateExecutable = true;
-                                    parameters.OutputAssembly = compilation_output;
-                                    CompilerResults compilation_results = compiler_interface.CompileAssemblyFromSource(parameters, Code_TextBox.Text);
-
-                                    if(compilation_results.Errors.Count > 0)
-                                    {
-                                        List<string> Compilation_Errors = new List<string>();
-
-                                        for (int count = 0; count < compilation_results.Errors.Count; count++)
-                                        {
-                                            CompilerError error = compilation_results.Errors[count];
-
-                                            Compilation_Errors.Add("Error: " + error.ErrorText);
-                                            Compilation_Errors.Add("Error HResult: " + error.ErrorNumber);
-                                        }
-
-                                        Compiler_Or_Interpreter_Errors compiler_Or_Interpreter_Errors = new Compiler_Or_Interpreter_Errors(Compilation_Errors);
-                                        compiler_Or_Interpreter_Errors.Show();
-                                    }
-
-                                    
-
-                                    File.Delete(compilation_output);
-                                    compiler.Dispose();
+                                    await Tools_Variables_Mitigator_Class.Compile_C_Sharp_Code(Code_TextBox.Text);
                                 }
                             }
                         }

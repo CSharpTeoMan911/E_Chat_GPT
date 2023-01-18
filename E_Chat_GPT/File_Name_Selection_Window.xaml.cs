@@ -34,6 +34,18 @@ namespace E_Chat_GPT
                 case "C_Sharp":
                     File_Extension = ".cs";
                     break;
+
+                case "Python":
+                    File_Extension = ".py";
+                    break;
+
+                case "Batch":
+                    File_Extension = ".bat";
+                    break;
+
+                case "PowerShell":
+                    File_Extension = ".ps1";
+                    break;
             }
 
             InitializeComponent();

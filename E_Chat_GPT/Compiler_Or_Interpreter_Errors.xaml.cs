@@ -19,8 +19,8 @@ namespace E_Chat_GPT
     /// </summary>
     public partial class Compiler_Or_Interpreter_Errors : Window
     {
-        private bool Window_Is_Closing;
-        private List<string> Error_List = new List<string>();
+        protected bool Window_Is_Closing;
+        private List<string> Error_List;
 
         public Compiler_Or_Interpreter_Errors(List<string> Error_List_Parameter)
         {
@@ -66,6 +66,7 @@ namespace E_Chat_GPT
                                 if (Window_Is_Closing == false)
                                 {
                                     this.WindowState = WindowState.Minimized;
+                                    Window_Is_Closing = false;
                                 }
                             }
                         }
@@ -99,18 +100,26 @@ namespace E_Chat_GPT
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            for(int count = 0; count < Error_List.Count(); count++)
+
+            int Error_List_Count = Error_List.Count();
+
+            for (int count = 0; count < Error_List_Count; count++)
             {
-                if(count > 0)
+                if (Error_List_Count > 0)
                 {
                     Code_Errors_TextBox.Text += "\n" + Error_List.ElementAt(count) + "\n";
 
-                    if (count % 2 == 0)
+                    if ((count + 1) % 2 == 0)
                     {
-                        Code_Errors_TextBox.Text += "\n\n\n";
+                        Code_Errors_TextBox.Text += "\n\n";
                     }
                 }
             }
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            Window_Is_Closing = true;
         }
     }
 }

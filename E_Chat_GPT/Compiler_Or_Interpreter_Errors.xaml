@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:E_Chat_GPT"
         mc:Ignorable="d"
-        Title="Compiler_Or_Interpreter_Errors" Height="325" Width="400" WindowStyle="None" AllowsTransparency="True" Loaded="Window_Loaded">
+        Title="Compiler_Or_Interpreter_Errors" Height="325" Width="400" WindowStyle="None" AllowsTransparency="True" Loaded="Window_Loaded" Closing="Window_Closing">
 
     <Window.Background>
         <LinearGradientBrush StartPoint="0.5,1" EndPoint="0,1">
@@ -73,9 +73,30 @@
             </Button>
         </StackPanel>
 
-       
 
-        <TextBox x:Name="Code_Errors_TextBox" Margin="50,0,10,0" Background="Transparent" Grid.Row="2" Grid.ColumnSpan="9" Grid.RowSpan="7"  FontSize="16"  AcceptsReturn="True" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" BorderBrush="Transparent">
+        <StackPanel Grid.Row="1" Grid.RowSpan="2" Grid.ColumnSpan="9" HorizontalAlignment="Center" VerticalAlignment="Center" Orientation="Horizontal">
+            <TextBlock  FontFamily="Bahnschrift" FontSize="30" Text="Errors ">
+                <TextBlock.Foreground>
+                    <LinearGradientBrush StartPoint="0.5,1" EndPoint="0,1">
+                        <GradientStop Color="#FF4E0606" Offset="1"/>
+                        <GradientStop Color="#FFD00000"/>
+                    </LinearGradientBrush>
+                </TextBlock.Foreground>
+            </TextBlock>
+
+            <TextBlock  FontFamily="Segoe MDL2 Assets" FontSize="20" Text="&#xEB90;" VerticalAlignment="Center">
+                <TextBlock.Foreground>
+                    <LinearGradientBrush StartPoint="0.5,1" EndPoint="0,1">
+                        <GradientStop Color="#FF4E0606" Offset="1"/>
+                        <GradientStop Color="#FF841313"/>
+                    </LinearGradientBrush>
+                </TextBlock.Foreground>
+            </TextBlock>
+        </StackPanel>
+        
+        
+
+        <TextBox x:Name="Code_Errors_TextBox" Margin="20,50,20,0" Background="Transparent" Focusable="False" Grid.Row="2" Grid.ColumnSpan="9" Grid.RowSpan="7"  FontSize="16"  AcceptsReturn="True" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" BorderBrush="Transparent">
 
             <TextBox.Foreground>
                 <LinearGradientBrush StartPoint="0.5,1" EndPoint="0,1">

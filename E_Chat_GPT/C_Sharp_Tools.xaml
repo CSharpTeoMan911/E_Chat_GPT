@@ -104,7 +104,8 @@
 
         </TextBox>
 
-        <StackPanel x:Name="Main_Menu" Grid.Row="1" Grid.ColumnSpan="2" Grid.RowSpan="3" Height="0" Width="170" HorizontalAlignment="Left" VerticalAlignment="Top">
+        
+        <StackPanel x:Name="Main_Menu" Grid.ColumnSpan="3" Grid.RowSpan="4" Height="0" Width="160" Margin="0,50,0,0" HorizontalAlignment="Left" VerticalAlignment="Top">
 
             <StackPanel.Background>
                 <LinearGradientBrush StartPoint="0.5,1" EndPoint="0,1">
@@ -113,22 +114,47 @@
                 </LinearGradientBrush>
             </StackPanel.Background>
 
-            <Button x:Name="Compile_The_Code_Button" FontFamily="Bahnschrift, Segoe MDL2 Assets" Margin="10,20,0,0" FontSize="24" Content="Compile  &#xE74C;" HorizontalAlignment="Left" Style="{StaticResource Silver_On_Hover_Margin_Button_Style}" Click="Compile_Code">
-                <Button.Foreground>
-                    <LinearGradientBrush StartPoint="0.5,1" EndPoint="0,1">
-                        <GradientStop Color="White" Offset="1"/>
-                        <GradientStop Color="#FF757575"/>
-                    </LinearGradientBrush>
-                </Button.Foreground>
-            </Button>
+            
+            <StackPanel Orientation="Horizontal">
+                
+                <Button x:Name="Compile_The_Code_Button" Margin="10,20,0,0" FontSize="20" HorizontalAlignment="Left" Style="{StaticResource Silver_On_Hover_Margin_Button_Style}" Click="Compile_Code">
+                    <Button.Foreground>
+                        <LinearGradientBrush StartPoint="0.5,1" EndPoint="0,1">
+                            <GradientStop Color="White" Offset="1"/>
+                            <GradientStop Color="#FF757575"/>
+                        </LinearGradientBrush>
+                    </Button.Foreground>
 
-            <Button x:Name="Save_The_Code_Button" FontFamily="Bahnschrift, Segoe MDL2 Assets" Margin="10,20,0,0" FontSize="24" Content="Save  &#xE105;" HorizontalAlignment="Left" Style="{StaticResource Silver_On_Hover_Margin_Button_Style}" Click="Save_Code">
+                    <Button.Content>
+                        <StackPanel Margin="5" Orientation="Horizontal">
+                            <TextBlock FontFamily="Corbel" FontSize="18" Text="Error Check  "/>
+
+                            <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xEB90;" FontSize="18" Margin="0,2,0,0" Foreground="Red"/>
+                        </StackPanel>
+                    </Button.Content>
+                    
+                </Button>
+            </StackPanel>
+            
+            
+
+            <Button x:Name="Save_The_Code_Button" Margin="10,10,0,0" FontSize="20" HorizontalAlignment="Left" Style="{StaticResource Silver_On_Hover_Margin_Button_Style}" Click="Save_Code">
+                
                 <Button.Foreground>
                     <LinearGradientBrush StartPoint="0.5,1" EndPoint="0,1">
                         <GradientStop Color="White" Offset="1"/>
                         <GradientStop Color="#FF757575"/>
                     </LinearGradientBrush>
                 </Button.Foreground>
+
+                <Button.Content>
+                    <StackPanel Margin="5" Orientation="Horizontal">
+                        <TextBlock FontFamily="Corbel" FontSize="18" Text="Save  "/>
+
+                        <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xE105;" FontSize="18" Margin="0,2,0,0" Foreground="Red"/>
+                    </StackPanel>
+                </Button.Content>
+                
             </Button>
 
         </StackPanel>
