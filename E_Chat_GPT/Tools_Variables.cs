@@ -6,13 +6,19 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace E_Chat_GPT
 {
     internal class Tools_Variables
     {
         protected static bool C_Sharp_Tools_Window_Opened;
+        protected static bool Python_Tools_Window_Opened;
+        protected static bool PowerShell_Tools_Window_Opened;
 
+        protected static bool Activate_C_Sharp_Tools_Window;
+        protected static bool Activate_Python_Tools_Window;
+        protected static bool Activate_PowerShell_Tools_Window;
 
         protected static Task<bool> C_Sharp_Code_Compilation(string code)
         {
@@ -58,13 +64,13 @@ namespace E_Chat_GPT
                     {
                         CompilerError error = compilation_results.Errors[count];
 
-                        Compilation_Errors.Add("\tError: " + error.ErrorText);
-                        Compilation_Errors.Add("\tError HResult: " + error.ErrorNumber);
+                        Compilation_Errors.Add("Error Message: " + error.ErrorText);
+                        Compilation_Errors.Add("Error HResult: " + error.ErrorNumber);
                     }
 
 
-                    Compiler_Or_Interpreter_Errors compiler_Or_Interpreter_Errors = new Compiler_Or_Interpreter_Errors(Compilation_Errors);
-                    compiler_Or_Interpreter_Errors.ShowDialog();
+                    MessageBox msg = new MessageBox(Compilation_Errors);
+                    msg.ShowDialog();
                 }
 
                 System.IO.File.Delete(compilation_output);
@@ -75,6 +81,118 @@ namespace E_Chat_GPT
             catch
             {
                 return Task.FromResult(false);
+            }
+        }
+
+
+        protected static async Task<bool> Python_Interpreter(string Code)
+        {
+            try
+            {
+                using (System.Diagnostics.Process main_process = new System.Diagnostics.Process())
+                {
+                    using (System.IO.StreamWriter file_writter = System.IO.File.CreateText(System.IO.Directory.GetCurrentDirectory() + "\\Test.py"))
+                    {
+                        await file_writter.WriteAsync(Code);
+                        await file_writter.FlushAsync();
+                        file_writter.Close();
+                        file_writter.Dispose();
+                    }
+
+                    main_process.StartInfo.UseShellExecute = false;
+                    main_process.StartInfo.CreateNoWindow = false;
+                    main_process.StartInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Normal;
+                    main_process.StartInfo.FileName = "cmd.exe";
+                    main_process.StartInfo.Arguments = "cmd.exe cmd /k \"\""+ Environment.CurrentDirectory + "\"\"\\python.exe -m Test";
+
+                    main_process.Start();
+                }
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+
+
+        protected static Task<bool> Python_Interpreter_Pip_Install(string Package_Name)
+        {
+            try
+            {
+                using (System.Diagnostics.Process main_process = new System.Diagnostics.Process())
+                {
+                    main_process.StartInfo.UseShellExecute = false;
+                    main_process.StartInfo.CreateNoWindow = false;
+                    main_process.StartInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Normal;
+                    main_process.StartInfo.FileName = "cmd.exe";
+                    main_process.StartInfo.Arguments = "cmd.exe cmd /k \"\"" + Environment.CurrentDirectory + "\"\"\\python.exe -m pip install " + Package_Name;
+
+                    main_process.Start();
+                }
+                return Task.FromResult(true);
+            }
+            catch
+            {
+                return Task.FromResult(false);
+            }
+        }
+
+
+
+        protected static Task<bool> Python_Interpreter_Pip_Uninstall(string Package_Name)
+        {
+            try
+            {
+                using (System.Diagnostics.Process main_process = new System.Diagnostics.Process())
+                {
+                    main_process.StartInfo.UseShellExecute = false;
+                    main_process.StartInfo.CreateNoWindow = false;
+                    main_process.StartInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Normal;
+                    main_process.StartInfo.FileName = "cmd.exe";
+                    main_process.StartInfo.Arguments = "cmd.exe cmd /k \"\"" + Environment.CurrentDirectory + "\"\"\\python.exe -m pip uninstall " + Package_Name;
+
+                    main_process.Start();
+                }
+                return Task.FromResult(true);
+            }
+            catch
+            {
+                return Task.FromResult(false);
+            }
+        }
+
+
+
+        protected async static Task<bool> PowerShell_Interpreter(string Code)
+        {
+            try
+            {
+                using (System.Diagnostics.Process main_process = new System.Diagnostics.Process())
+                {
+                    using (System.IO.StreamWriter file_writter = System.IO.File.CreateText(Environment.CurrentDirectory + "\\Test.ps1"))
+                    {
+                        await file_writter.WriteAsync(Code);
+                        await file_writter.FlushAsync();
+                        file_writter.Close();
+                        file_writter.Dispose();
+                    }
+
+                    main_process.StartInfo.UseShellExecute = true;
+                    main_process.StartInfo.CreateNoWindow = true;
+                    main_process.StartInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Normal;
+                    main_process.StartInfo.FileName = "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe";
+                    main_process.StartInfo.Arguments = "PowerShell -NoExit -File \"'" + Environment.CurrentDirectory + "\\Test.ps1'\"";
+
+                    main_process.Start();
+                }
+
+                return true;
+            }
+            catch
+            {
+                return false;
             }
         }
     }

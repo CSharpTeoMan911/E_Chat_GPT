@@ -11,92 +11,56 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using System.CodeDom.Compiler;
-using System.Diagnostics;
-using Microsoft.CSharp;
-using System.Web.UI.WebControls;
-using System.IO;
-using System.Security.Cryptography;
-using System.Reflection;
 
 namespace E_Chat_GPT
 {
     /// <summary>
-    /// Interaction logic for C_Sharp_Tools.xaml
+    /// Interaction logic for Python_Tools.xaml
     /// </summary>
-    public partial class C_Sharp_Tools : Window
+    public partial class Python_Tools : Window
     {
         private bool Window_Is_Closing;
         private short Maximised_Or_Normalised;
-        private short Main_Menu_Expanded_Or_Contracted;
-        
-
+        private short Expand_Or_Contract_The_Main_Menu;
         private System.Timers.Timer Functionality_Timer = new System.Timers.Timer();
 
-
-        private sealed class Tools_Variables_Mitigator_Class:Tools_Variables
+        private sealed class Tools_Variables_Mitigator_Class : Tools_Variables
         {
-            public static Task<bool> Set_If_C_Sharp_Window_Is_Opened(bool Window_Opened)
+            public static Task<bool> Set_If_Python_Window_Is_Opened(bool Window_Opened)
             {
-                C_Sharp_Tools_Window_Opened = Window_Opened;
+                Python_Tools_Window_Opened = Window_Opened;
                 return Task.FromResult(true);
             }
 
-            public static Task<bool> Get_If_C_Sharp_Window_Is_Activated()
+            public static Task<bool> Get_If_Python_Window_Is_Activated()
             {
-                return Task.FromResult(Activate_C_Sharp_Tools_Window);
+                return Task.FromResult(Activate_Python_Tools_Window);
             }
 
-            public static Task<bool> Set_If_C_Sharp_Window_Is_Activated(bool Window_Activated)
+            public static Task<bool> Set_If_Python_Window_Is_Activated(bool Window_Activated)
             {
-                Activate_C_Sharp_Tools_Window = Window_Activated;
+                Activate_Python_Tools_Window = Window_Activated;
                 return Task.FromResult(true);
             }
 
-            public static async Task<bool> Compile_C_Sharp_Code(string Code)
+            public static async Task<bool> Interpret_Python_Code(string Code)
             {
-                return await C_Sharp_Code_Compilation(Code);
+                return await Python_Interpreter(Code);
             }
         }
 
-
-
-        public C_Sharp_Tools()
+        public Python_Tools()
         {
             InitializeComponent();
         }
 
-        private async void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-            if (Application.Current != null)
-            {
-                if (Application.Current.Dispatcher != null)
-                {
-                    if (Application.Current.Dispatcher.HasShutdownStarted == false)
-                    {
-                        if (Application.Current.MainWindow != null)
-                        {
-                            if(this != null)
-                            {
-                                if(Window_Is_Closing == false)
-                                {
-                                    Window_Is_Closing = true;
-                                    await Tools_Variables_Mitigator_Class.Set_If_C_Sharp_Window_Is_Opened(false);
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
         private async void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            await Tools_Variables_Mitigator_Class.Set_If_C_Sharp_Window_Is_Opened(true);
-
             Functionality_Timer.Elapsed += Functionality_Timer_Elapsed;
             Functionality_Timer.Interval = 10;
             Functionality_Timer.Start();
+
+            await Tools_Variables_Mitigator_Class.Set_If_Python_Window_Is_Opened(true);
         }
 
         private void Functionality_Timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
@@ -115,24 +79,25 @@ namespace E_Chat_GPT
                                 {
                                     if (Window_Is_Closing == false)
                                     {
-                                        switch (Main_Menu_Expanded_Or_Contracted)
+                                        switch (Expand_Or_Contract_The_Main_Menu)
                                         {
                                             case 1:
-                                                if (Main_Menu.Height < 120)
+                                                if (Main_Menu.Height < 220)
                                                 {
                                                     Main_Menu.Height += 10;
                                                 }
                                                 break;
 
                                             case 2:
-                                                Main_Menu_Expanded_Or_Contracted = 0;
+                                                Expand_Or_Contract_The_Main_Menu = 0;
                                                 Main_Menu.Height = 0;
                                                 break;
                                         }
 
-                                        if (await Tools_Variables_Mitigator_Class.Get_If_C_Sharp_Window_Is_Activated() == true)
+
+                                        if (await Tools_Variables_Mitigator_Class.Get_If_Python_Window_Is_Activated() == true)
                                         {
-                                            switch (this.WindowState)
+                                            switch(this.WindowState)
                                             {
                                                 case WindowState.Minimized:
                                                     this.WindowState = WindowState.Normal;
@@ -140,7 +105,7 @@ namespace E_Chat_GPT
 
                                                 default:
                                                     this.Activate();
-                                                    await Tools_Variables_Mitigator_Class.Set_If_C_Sharp_Window_Is_Activated(false);
+                                                    await Tools_Variables_Mitigator_Class.Set_If_Python_Window_Is_Activated(false);
                                                     break;
                                             }
                                         }
@@ -152,6 +117,14 @@ namespace E_Chat_GPT
                                             Functionality_Timer.Stop();
                                             Functionality_Timer.Dispose();
                                         }
+                                    }
+                                }
+                                else
+                                {
+                                    if (Functionality_Timer != null)
+                                    {
+                                        Functionality_Timer.Stop();
+                                        Functionality_Timer.Dispose();
                                     }
                                 }
                             }
@@ -185,11 +158,23 @@ namespace E_Chat_GPT
             }
             else
             {
-                if (Functionality_Timer != null)
+                if(Functionality_Timer != null)
                 {
                     Functionality_Timer.Stop();
                     Functionality_Timer.Dispose();
                 }
+            }
+        }
+
+        private async void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            await Tools_Variables_Mitigator_Class.Set_If_Python_Window_Is_Opened(false);
+            Window_Is_Closing = true;
+
+            if (Functionality_Timer != null)
+            {
+                Functionality_Timer.Stop();
+                Functionality_Timer.Dispose();
             }
         }
 
@@ -205,7 +190,7 @@ namespace E_Chat_GPT
                         {
                             if (this != null)
                             {
-                                if(Window_Is_Closing == false)
+                                if (Window_Is_Closing == false)
                                 {
                                     this.WindowState = WindowState.Minimized;
                                 }
@@ -232,7 +217,7 @@ namespace E_Chat_GPT
                                 {
                                     Maximised_Or_Normalised++;
 
-                                    switch (Maximised_Or_Normalised)
+                                    switch(Maximised_Or_Normalised)
                                     {
                                         case 1:
                                             this.WindowState = WindowState.Maximized;
@@ -267,12 +252,6 @@ namespace E_Chat_GPT
                             {
                                 if (Window_Is_Closing == false)
                                 {
-                                    if(Functionality_Timer != null)
-                                    {
-                                        Functionality_Timer.Stop();
-                                        Functionality_Timer.Dispose();
-                                    }
-
                                     this.Close();
                                 }
                             }
@@ -282,7 +261,7 @@ namespace E_Chat_GPT
             }
         }
 
-        private void Open_Or_Close_Main_Menu(object sender, RoutedEventArgs e)
+        private async void Interpret_Code(object sender, RoutedEventArgs e)
         {
             if (Application.Current != null)
             {
@@ -296,7 +275,7 @@ namespace E_Chat_GPT
                             {
                                 if (Window_Is_Closing == false)
                                 {
-                                    Main_Menu_Expanded_Or_Contracted++;
+                                    await Tools_Variables_Mitigator_Class.Interpret_Python_Code(Code_TextBox.Text);
                                 }
                             }
                         }
@@ -305,7 +284,7 @@ namespace E_Chat_GPT
             }
         }
 
-        private void Move_The_Window(object sender, MouseButtonEventArgs e)
+        private void Install_Dependecies(object sender, RoutedEventArgs e)
         {
             if (Application.Current != null)
             {
@@ -319,7 +298,8 @@ namespace E_Chat_GPT
                             {
                                 if (Window_Is_Closing == false)
                                 {
-                                    this.DragMove();
+                                    Pip_Manager pip_Manager = new Pip_Manager(true);
+                                    pip_Manager.ShowDialog();
                                 }
                             }
                         }
@@ -328,7 +308,7 @@ namespace E_Chat_GPT
             }
         }
 
-        private async void Compile_Code(object sender, RoutedEventArgs e)
+        private void Uninstall_Dependecies(object sender, RoutedEventArgs e)
         {
             if (Application.Current != null)
             {
@@ -342,7 +322,8 @@ namespace E_Chat_GPT
                             {
                                 if (Window_Is_Closing == false)
                                 {
-                                    await Tools_Variables_Mitigator_Class.Compile_C_Sharp_Code(Code_TextBox.Text);
+                                    Pip_Manager pip_Manager = new Pip_Manager(false);
+                                    pip_Manager.ShowDialog();
                                 }
                             }
                         }
@@ -365,8 +346,54 @@ namespace E_Chat_GPT
                             {
                                 if (Window_Is_Closing == false)
                                 {
-                                    Save_File_MessageBox file_Name_Selection_Window = new Save_File_MessageBox(Code_TextBox.Text, "C_Sharp");
+                                    Save_File_MessageBox file_Name_Selection_Window = new Save_File_MessageBox(Code_TextBox.Text, "Python");
                                     file_Name_Selection_Window.ShowDialog();
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        private void Open_Or_Close_Main_Menu(object sender, RoutedEventArgs e)
+        {
+            if (Application.Current != null)
+            {
+                if (Application.Current.Dispatcher != null)
+                {
+                    if (Application.Current.Dispatcher.HasShutdownStarted == false)
+                    {
+                        if (Application.Current.MainWindow != null)
+                        {
+                            if (this != null)
+                            {
+                                if (Window_Is_Closing == false)
+                                {
+                                    Expand_Or_Contract_The_Main_Menu++;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        private void Move_Window(object sender, MouseButtonEventArgs e)
+        {
+            if (Application.Current != null)
+            {
+                if (Application.Current.Dispatcher != null)
+                {
+                    if (Application.Current.Dispatcher.HasShutdownStarted == false)
+                    {
+                        if (Application.Current.MainWindow != null)
+                        {
+                            if (this != null)
+                            {
+                                if (Window_Is_Closing == false)
+                                {
+                                    this.DragMove();
                                 }
                             }
                         }

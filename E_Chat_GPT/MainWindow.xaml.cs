@@ -47,6 +47,39 @@ namespace E_Chat_GPT
             {
                 return Task.FromResult(C_Sharp_Tools_Window_Opened);
             }
+
+            public static Task<bool> Activate_C_Sharp_Window()
+            {
+                Activate_C_Sharp_Tools_Window = true;
+                return Task.FromResult(true);
+            }
+
+
+
+
+            public static Task<bool> Get_If_Python_Window_Is_Opened()
+            {
+                return Task.FromResult(Python_Tools_Window_Opened);
+            }
+
+            public static Task<bool> Activate_Python_Window()
+            {
+                Activate_Python_Tools_Window = true;
+                return Task.FromResult(true);
+            }
+
+
+
+            public static Task<bool> Get_If_PowerShell_Window_Is_Opened()
+            {
+                return Task.FromResult(PowerShell_Tools_Window_Opened);
+            }
+
+            public static Task<bool> Activate_PowerShell_Window()
+            {
+                Activate_PowerShell_Tools_Window = true;
+                return Task.FromResult(true);
+            }
         }
 
         private void Functionality_Timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
@@ -143,7 +176,13 @@ namespace E_Chat_GPT
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
+            if(main != null)
+            {
+                main.Dispose();
+            }
+
             Window_Is_Closing = true;
+            Environment.Exit(0);
         }
 
         private void Main_Navigation_Completed(object sender, Microsoft.Web.WebView2.Core.CoreWebView2NavigationCompletedEventArgs e)
@@ -262,8 +301,13 @@ namespace E_Chat_GPT
                         {
                             if (Window_Is_Closing == false)
                             {
-                                main.Dispose();
-                                Environment.Exit(0);
+                                if(Functionality_Timer != null)
+                                {
+                                    Functionality_Timer.Stop();
+                                    Functionality_Timer.Dispose();
+                                }
+
+                                this.Close();
                             }
                         }
                     }
@@ -303,11 +347,90 @@ namespace E_Chat_GPT
                         {
                             if (Window_Is_Closing == false)
                             {
-                                if(await Tools_Variables_Mitigator_Class.Get_If_C_Sharp_Window_Is_Opened() == false)
+                                if (await Tools_Variables_Mitigator_Class.Get_If_C_Sharp_Window_Is_Opened() == false)
                                 {
                                     C_Sharp_Tools c_sharp = new C_Sharp_Tools();
                                     c_sharp.Show();
                                 }
+                                else
+                                {
+                                    await Tools_Variables_Mitigator_Class.Activate_C_Sharp_Window();
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        private async void Open_Python_Tools(object sender, RoutedEventArgs e)
+        {
+            if (Application.Current != null)
+            {
+                if (Application.Current.Dispatcher != null)
+                {
+                    if (Application.Current.Dispatcher.HasShutdownStarted == false)
+                    {
+                        if (Application.Current.MainWindow != null)
+                        {
+                            if (Window_Is_Closing == false)
+                            {
+                                if (await Tools_Variables_Mitigator_Class.Get_If_Python_Window_Is_Opened() == false)
+                                {
+                                    Python_Tools python = new Python_Tools();
+                                    python.Show();
+                                }
+                                else
+                                {
+                                    await Tools_Variables_Mitigator_Class.Activate_Python_Window();
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        private async void Open_PowerShell_Tools(object sender, RoutedEventArgs e)
+        {
+            if (Application.Current != null)
+            {
+                if (Application.Current.Dispatcher != null)
+                {
+                    if (Application.Current.Dispatcher.HasShutdownStarted == false)
+                    {
+                        if (Application.Current.MainWindow != null)
+                        {
+                            if (Window_Is_Closing == false)
+                            {
+                                if (await Tools_Variables_Mitigator_Class.Get_If_PowerShell_Window_Is_Opened() == false)
+                                {
+                                    PowerShell_Tools PowerShell = new PowerShell_Tools();
+                                    PowerShell.Show();
+                                }
+                                else
+                                {
+                                    await Tools_Variables_Mitigator_Class.Activate_PowerShell_Window();
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        private void Open_Command_Prompt_Tools(object sender, RoutedEventArgs e)
+        {
+            if (Application.Current != null)
+            {
+                if (Application.Current.Dispatcher != null)
+                {
+                    if (Application.Current.Dispatcher.HasShutdownStarted == false)
+                    {
+                        if (Application.Current.MainWindow != null)
+                        {
+                            if (Window_Is_Closing == false)
+                            {
                             }
                         }
                     }

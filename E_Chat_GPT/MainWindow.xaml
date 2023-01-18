@@ -105,13 +105,13 @@
                 </LinearGradientBrush>
             </StackPanel.Background>
             
-            <Button x:Name="PowerShell" Margin="0,30,0,0" HorizontalAlignment="Center" Style="{StaticResource Red_On_Hover_Margin_Button_Style}">
+            <Button x:Name="PowerShell" Margin="0,30,0,0" HorizontalAlignment="Center" Style="{StaticResource Red_On_Hover_Margin_Button_Style}" Click="Open_PowerShell_Tools">
                 <Button.Content>
                     <Image Width="{Binding ElementName=Main_Menu_Button, Path=ActualWidth}" HorizontalAlignment="Center" Stretch="UniformToFill" Source="PowerShell.png"/>
                 </Button.Content>
             </Button>
 
-            <Button x:Name="Command_Prompt" Margin="0,30,0,0" HorizontalAlignment="Center" Style="{StaticResource Red_On_Hover_Margin_Button_Style}">
+            <Button x:Name="Command_Prompt" Margin="0,30,0,0" HorizontalAlignment="Center" Style="{StaticResource Red_On_Hover_Margin_Button_Style}" Click="Open_Command_Prompt_Tools">
                 <Button.Content>
                     <Image Width="{Binding ElementName=Main_Menu_Button, Path=ActualWidth}" Stretch="UniformToFill" Source="Command_Prompt.png"/>
                 </Button.Content>
@@ -123,7 +123,7 @@
                 </Button.Content>
             </Button>
 
-            <Button x:Name="Python" Margin="0,30,0,0" HorizontalAlignment="Center" Style="{StaticResource Red_On_Hover_Margin_Button_Style}">
+            <Button x:Name="Python" Margin="0,30,0,0" HorizontalAlignment="Center" Style="{StaticResource Red_On_Hover_Margin_Button_Style}" Click="Open_Python_Tools">
                 <Button.Content>
                     <Image Width="{Binding ElementName=Main_Menu_Button, Path=ActualWidth}" Stretch="UniformToFill" Source="Python.png"/>
                 </Button.Content>

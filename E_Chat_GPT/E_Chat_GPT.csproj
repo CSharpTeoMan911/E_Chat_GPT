@@ -174,22 +174,32 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Compiler_Or_Interpreter_Errors.xaml.cs">
-      <DependentUpon>Compiler_Or_Interpreter_Errors.xaml</DependentUpon>
+    <Compile Include="MessageBox.cs">
+      <SubType>Form</SubType>
     </Compile>
-    <Compile Include="File_Name_Selection_Window.xaml.cs">
-      <DependentUpon>File_Name_Selection_Window.xaml</DependentUpon>
+    <Compile Include="MessageBox.Designer.cs">
+      <DependentUpon>MessageBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Pip_Manager.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Pip_Manager.Designer.cs">
+      <DependentUpon>Pip_Manager.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PowerShell_Tools.xaml.cs">
+      <DependentUpon>PowerShell_Tools.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Python_Tools.xaml.cs">
+      <DependentUpon>Python_Tools.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Save_File_MessageBox.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Save_File_MessageBox.Designer.cs">
+      <DependentUpon>Save_File_MessageBox.cs</DependentUpon>
     </Compile>
     <Compile Include="Tools_Variables.cs" />
-    <Page Include="Compiler_Or_Interpreter_Errors.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="C_Sharp_Tools.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="File_Name_Selection_Window.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -208,6 +218,14 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="PowerShell_Tools.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Python_Tools.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -223,9 +241,18 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <EmbeddedResource Include="MessageBox.resx">
+      <DependentUpon>MessageBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Pip_Manager.resx">
+      <DependentUpon>Pip_Manager.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Save_File_MessageBox.resx">
+      <DependentUpon>Save_File_MessageBox.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
