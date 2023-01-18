@@ -23,9 +23,9 @@ namespace E_Chat_GPT
                 CSharpCodeProvider compiler = new CSharpCodeProvider();
                 CompilerParameters parameters = new CompilerParameters();
 
-#pragma warning disable CS0618 // Type or member is obsolete
+                #pragma warning disable CS0618 // Type or member is obsolete
                 ICodeCompiler compiler_interface = compiler.CreateCompiler();
-#pragma warning restore CS0618 // Type or member is obsolete
+                #pragma warning restore CS0618 // Type or member is obsolete
 
 
                 parameters.ReferencedAssemblies.AddRange(Assembly.GetExecutingAssembly().GetReferencedAssemblies().Select(a =>
