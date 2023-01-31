@@ -52,14 +52,30 @@
             </Rectangle.Fill>
         </Rectangle>
 
-        <Button x:Name="Main_Menu_Button" FontFamily="Segoe MDL2 Assets" Content="&#xE700;" FontSize="30" Width="60" Margin="20,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource Red_On_Hover_Margin_Button_Style}" Click="Open_Or_Close_Main_Menu">
-            <Button.Foreground>
-                <LinearGradientBrush StartPoint="0.5,1" EndPoint="0,1">
-                    <GradientStop Color="#FF07090C" Offset="1"/>
-                    <GradientStop Color="#FFD80000"/>
-                </LinearGradientBrush>
-            </Button.Foreground>
-        </Button>
+        
+
+
+        <StackPanel Grid.ColumnSpan="2" HorizontalAlignment="Left" VerticalAlignment="Top" Orientation="Horizontal">
+            <Button x:Name="Main_Menu_Button" FontFamily="Segoe MDL2 Assets" Content="&#xE700;" FontSize="25" Width="60" Margin="20,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource Red_On_Hover_Margin_Button_Style}" Click="Open_Or_Close_Main_Menu">
+                <Button.Foreground>
+                    <LinearGradientBrush StartPoint="0.5,1" EndPoint="0,1">
+                        <GradientStop Color="#FF07090C" Offset="1"/>
+                        <GradientStop Color="#FFD80000"/>
+                    </LinearGradientBrush>
+                </Button.Foreground>
+            </Button>
+
+            <Button x:Name="Reload_Page_Button" FontFamily="Segoe MDL2 Assets" Content="&#xE149;" FontSize="25" Width="60" Margin="20,10,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" Style="{StaticResource Red_On_Hover_Margin_Button_Style}" Click="Reload_Page">
+                <Button.Foreground>
+                    <LinearGradientBrush StartPoint="0.5,1" EndPoint="0,1">
+                        <GradientStop Color="#FF07090C" Offset="1"/>
+                        <GradientStop Color="#FFD80000"/>
+                    </LinearGradientBrush>
+                </Button.Foreground>
+            </Button>
+            
+            
+        </StackPanel>
 
 
         <StackPanel x:Name="Window_Controls" Grid.ColumnSpan="9" Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="10">

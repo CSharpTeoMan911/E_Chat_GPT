@@ -15,45 +15,63 @@ using System.Windows.Shapes;
 namespace E_Chat_GPT
 {
     /// <summary>
-    /// Interaction logic for PowerShell_Tools.xaml
+    /// Interaction logic for Command_Prompt_Tools.xaml
     /// </summary>
-    public partial class PowerShell_Tools : Window
+    public partial class Command_Prompt_Tools : Window
     {
         private bool Window_Is_Closing;
         private short Maximised_Or_Normalised;
-        private short Expand_Or_Contract_The_Main_Menu;
+        private short Menu_Expanded_Or_Contracted;
         private System.Timers.Timer Functionality_Timer = new System.Timers.Timer();
 
-
-        private sealed class Tools_Variables_Mitigator_Class : Tools_Variables
+        public Command_Prompt_Tools()
         {
-            public static Task<bool> Set_If_PowerShell_Window_Is_Opened(bool Window_Opened)
+            InitializeComponent();
+        }
+
+        private sealed class Tools_Variables_Mitigator:Tools_Variables
+        {
+            public static Task<bool> Set_If_Command_Prompt_Window_Is_Opened(bool Window_Opened)
             {
-                PowerShell_Tools_Window_Opened = Window_Opened;
+                Command_Prompt_Window_Tools_Opened = Window_Opened;
                 return Task.FromResult(true);
             }
 
-            public static Task<bool> Get_If_PowerShell_Window_Is_Activated()
+            public static Task<bool> Get_If_Command_Prompt_Window_Is_Activated()
             {
-                return Task.FromResult(Activate_PowerShell_Tools_Window);
+                return Task.FromResult(Activate_Command_Prompt_Window_Tools_Window);
             }
 
-            public static Task<bool> Set_If_PowerShell_Window_Is_Activated(bool Window_Activated)
+            public static Task<bool> Set_If_Command_Prompt_Window_Is_Activated(bool Window_Activated)
             {
-                Activate_PowerShell_Tools_Window = Window_Activated;
+                Activate_Command_Prompt_Window_Tools_Window = Window_Activated;
                 return Task.FromResult(true);
             }
 
-            public static async Task<bool> Interpret_PowerShell_Code(string Code)
+            public static async Task<bool> Interpret_Command_Prompt_Code(string Code)
             {
-                return await PowerShell_Interpreter(Code);
+                return await Command_Prompt_Interpreter(Code);
             }
         }
 
-
-        public PowerShell_Tools()
+        private void Move_The_Window(object sender, MouseButtonEventArgs e)
         {
-            InitializeComponent();
+            if (Application.Current != null)
+            {
+                if (Application.Current.Dispatcher != null)
+                {
+                    if (Application.Current.Dispatcher.HasShutdownStarted == false)
+                    {
+                        if (Application.Current.MainWindow != null)
+                        {
+                            if (Window_Is_Closing == false)
+                            {
+                                this.DragMove();
+                            }
+                        }
+                    }
+                }
+            }
         }
 
         private void Minimise_Window(object sender, RoutedEventArgs e)
@@ -90,17 +108,17 @@ namespace E_Chat_GPT
                             {
                                 Maximised_Or_Normalised++;
 
-                                switch (Maximised_Or_Normalised)
+                                switch(Maximised_Or_Normalised)
                                 {
                                     case 1:
-                                        Maximise_Or_Normalise_Button.Content = "\xEF2F";
                                         this.WindowState = WindowState.Maximized;
+                                        Maximise_Or_Normalise_Button.Content = "\xEF2F";
                                         break;
 
                                     case 2:
-                                        Maximised_Or_Normalised = 0;
-                                        Maximise_Or_Normalise_Button.Content = "\xEF2E";
                                         this.WindowState = WindowState.Normal;
+                                        Maximise_Or_Normalise_Button.Content = "\xEF2E";
+                                        Maximised_Or_Normalised = 0;
                                         break;
                                 }
                             }
@@ -120,35 +138,9 @@ namespace E_Chat_GPT
                     {
                         if (Application.Current.MainWindow != null)
                         {
-                            if (Functionality_Timer != null)
-                            {
-                                Functionality_Timer.Stop();
-                                Functionality_Timer.Dispose();
-                            }
-
                             if (Window_Is_Closing == false)
                             {
                                 this.Close();
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-        private void Move_The_Window(object sender, MouseButtonEventArgs e)
-        {
-            if (Application.Current != null)
-            {
-                if (Application.Current.Dispatcher != null)
-                {
-                    if (Application.Current.Dispatcher.HasShutdownStarted == false)
-                    {
-                        if (Application.Current.MainWindow != null)
-                        {
-                            if (Window_Is_Closing == false)
-                            {
-                                this.DragMove();
                             }
                         }
                     }
@@ -168,7 +160,7 @@ namespace E_Chat_GPT
                         {
                             if (Window_Is_Closing == false)
                             {
-                                Expand_Or_Contract_The_Main_Menu++;
+                                Menu_Expanded_Or_Contracted++;
                             }
                         }
                     }
@@ -176,13 +168,55 @@ namespace E_Chat_GPT
             }
         }
 
+        private async void Run_Code(object sender, RoutedEventArgs e)
+        {
+            if (Application.Current != null)
+            {
+                if (Application.Current.Dispatcher != null)
+                {
+                    if (Application.Current.Dispatcher.HasShutdownStarted == false)
+                    {
+                        if (Application.Current.MainWindow != null)
+                        {
+                            if (Window_Is_Closing == false)
+                            {
+                                await Tools_Variables_Mitigator.Interpret_Command_Prompt_Code(Code_TextBox.Text);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        private void Save_Code(object sender, RoutedEventArgs e)
+        {
+            if (Application.Current != null)
+            {
+                if (Application.Current.Dispatcher != null)
+                {
+                    if (Application.Current.Dispatcher.HasShutdownStarted == false)
+                    {
+                        if (Application.Current.MainWindow != null)
+                        {
+                            if (Window_Is_Closing == false)
+                            {
+                                Save_File_MessageBox save_File_MessageBox = new Save_File_MessageBox(Code_TextBox.Text, "Batch");
+                                save_File_MessageBox.ShowDialog();
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+
         private async void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            await Tools_Variables_Mitigator_Class.Set_If_PowerShell_Window_Is_Opened(true);
-
             Functionality_Timer.Elapsed += Functionality_Timer_Elapsed;
             Functionality_Timer.Interval = 10;
             Functionality_Timer.Start();
+
+            await Tools_Variables_Mitigator.Set_If_Command_Prompt_Window_Is_Opened(true);
         }
 
         private void Functionality_Timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
@@ -193,13 +227,13 @@ namespace E_Chat_GPT
                 {
                     if (Application.Current.Dispatcher.HasShutdownStarted == false)
                     {
-                        Application.Current.Dispatcher.Invoke(async () =>
+                        Application.Current.Dispatcher.Invoke(async() =>
                         {
                             if (Application.Current.MainWindow != null)
                             {
                                 if (Window_Is_Closing == false)
                                 {
-                                    switch (Expand_Or_Contract_The_Main_Menu)
+                                    switch (Menu_Expanded_Or_Contracted)
                                     {
                                         case 1:
 
@@ -210,23 +244,23 @@ namespace E_Chat_GPT
                                             break;
 
                                         case 2:
-                                            Expand_Or_Contract_The_Main_Menu = 0;
                                             Main_Menu.Height = 0;
+                                            Menu_Expanded_Or_Contracted = 0;
                                             break;
                                     }
 
-                                    if(await Tools_Variables_Mitigator_Class.Get_If_PowerShell_Window_Is_Activated() == true)
+                                    if (await Tools_Variables_Mitigator.Get_If_Command_Prompt_Window_Is_Activated() == true)
                                     {
-                                        switch(this.WindowState)
+                                        switch (this.WindowState)
                                         {
                                             case WindowState.Minimized:
                                                 this.WindowState = WindowState.Normal;
-                                                await Tools_Variables_Mitigator_Class.Set_If_PowerShell_Window_Is_Activated(false);
+                                                await Tools_Variables_Mitigator.Set_If_Command_Prompt_Window_Is_Activated(false);
                                                 break;
 
                                             default:
                                                 this.Activate();
-                                                await Tools_Variables_Mitigator_Class.Set_If_PowerShell_Window_Is_Activated(false);
+                                                await Tools_Variables_Mitigator.Set_If_Command_Prompt_Window_Is_Activated(false);
                                                 break;
                                         }
                                     }
@@ -281,54 +315,12 @@ namespace E_Chat_GPT
         private async void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             Window_Is_Closing = true;
+            await Tools_Variables_Mitigator.Set_If_Command_Prompt_Window_Is_Opened(false);
 
             if (Functionality_Timer != null)
             {
                 Functionality_Timer.Close();
                 Functionality_Timer.Dispose();
-            }
-
-            await Tools_Variables_Mitigator_Class.Set_If_PowerShell_Window_Is_Opened(false);
-        }
-
-        private async void Run_Code(object sender, RoutedEventArgs e)
-        {
-            if (Application.Current != null)
-            {
-                if (Application.Current.Dispatcher != null)
-                {
-                    if (Application.Current.Dispatcher.HasShutdownStarted == false)
-                    {
-                        if (Application.Current.MainWindow != null)
-                        {
-                            if (Window_Is_Closing == false)
-                            {
-                                await Tools_Variables_Mitigator_Class.Interpret_PowerShell_Code(Code_TextBox.Text);
-                            }
-                        }
-                    }
-                }
-            }
-        }
-
-        private void Save_Code(object sender, RoutedEventArgs e)
-        {
-            if (Application.Current != null)
-            {
-                if (Application.Current.Dispatcher != null)
-                {
-                    if (Application.Current.Dispatcher.HasShutdownStarted == false)
-                    {
-                        if (Application.Current.MainWindow != null)
-                        {
-                            if (Window_Is_Closing == false)
-                            {
-                                Save_File_MessageBox save_File_MessageBox = new Save_File_MessageBox(Code_TextBox.Text, "PowerShell");
-                                save_File_MessageBox.ShowDialog();
-                            }
-                        }
-                    }
-                }
             }
         }
     }

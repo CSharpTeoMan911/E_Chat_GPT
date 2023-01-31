@@ -15,10 +15,12 @@ namespace E_Chat_GPT
         protected static bool C_Sharp_Tools_Window_Opened;
         protected static bool Python_Tools_Window_Opened;
         protected static bool PowerShell_Tools_Window_Opened;
+        protected static bool Command_Prompt_Window_Tools_Opened;
 
         protected static bool Activate_C_Sharp_Tools_Window;
         protected static bool Activate_Python_Tools_Window;
         protected static bool Activate_PowerShell_Tools_Window;
+        protected static bool Activate_Command_Prompt_Window_Tools_Window;
 
         protected static Task<bool> C_Sharp_Code_Compilation(string code)
         {
@@ -184,6 +186,39 @@ namespace E_Chat_GPT
                     main_process.StartInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Normal;
                     main_process.StartInfo.FileName = "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe";
                     main_process.StartInfo.Arguments = "PowerShell -NoExit -File \"'" + Environment.CurrentDirectory + "\\Test.ps1'\"";
+
+                    main_process.Start();
+                }
+
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+
+
+        protected async static Task<bool> Command_Prompt_Interpreter(string Code)
+        {
+            try
+            {
+                using (System.Diagnostics.Process main_process = new System.Diagnostics.Process())
+                {
+                    using (System.IO.StreamWriter file_writter = System.IO.File.CreateText(Environment.CurrentDirectory + "\\Test.bat"))
+                    {
+                        await file_writter.WriteAsync(Code);
+                        await file_writter.FlushAsync();
+                        file_writter.Close();
+                        file_writter.Dispose();
+                    }
+
+                    main_process.StartInfo.UseShellExecute = true;
+                    main_process.StartInfo.CreateNoWindow = true;
+                    main_process.StartInfo.WindowStyle = System.Diagnostics.ProcessWindowStyle.Normal;
+                    main_process.StartInfo.FileName = "cmd.exe";
+                    main_process.StartInfo.Arguments = "cmd.exe cmd /k \"\"" + Environment.CurrentDirectory + "\"\"\\Test.bat";
 
                     main_process.Start();
                 }

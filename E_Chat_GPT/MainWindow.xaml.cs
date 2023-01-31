@@ -80,6 +80,19 @@ namespace E_Chat_GPT
                 Activate_PowerShell_Tools_Window = true;
                 return Task.FromResult(true);
             }
+
+
+
+            public static Task<bool> Get_If_Command_Prompt_Window_Is_Opened()
+            {
+                return Task.FromResult(Command_Prompt_Window_Tools_Opened);
+            }
+
+            public static Task<bool> Activate_Command_Prompt_Window()
+            {
+                Activate_Command_Prompt_Window_Tools_Window = true;
+                return Task.FromResult(true);
+            }
         }
 
         private void Functionality_Timer_Elapsed(object sender, System.Timers.ElapsedEventArgs e)
@@ -185,7 +198,7 @@ namespace E_Chat_GPT
             Environment.Exit(0);
         }
 
-        private void Main_Navigation_Completed(object sender, Microsoft.Web.WebView2.Core.CoreWebView2NavigationCompletedEventArgs e)
+        private async void Main_Navigation_Completed(object sender, Microsoft.Web.WebView2.Core.CoreWebView2NavigationCompletedEventArgs e)
         {
             if (Application.Current != null)
             {
@@ -206,6 +219,10 @@ namespace E_Chat_GPT
 
                                     case false:
                                         Is_Chat_GPT_Page = true;
+                                        string siteHtML = await main.CoreWebView2.ExecuteScriptAsync("document.body.innerHTML.getElementsByTag(\"\\u003Cdiv\");");
+                                        //string text = siteHtML.Replace
+
+                                        System.Diagnostics.Debug.WriteLine(siteHtML);
                                         break;
                                 }
                             }
@@ -419,7 +436,7 @@ namespace E_Chat_GPT
             }
         }
 
-        private void Open_Command_Prompt_Tools(object sender, RoutedEventArgs e)
+        private async void Open_Command_Prompt_Tools(object sender, RoutedEventArgs e)
         {
             if (Application.Current != null)
             {
@@ -431,6 +448,35 @@ namespace E_Chat_GPT
                         {
                             if (Window_Is_Closing == false)
                             {
+                                if (await Tools_Variables_Mitigator_Class.Get_If_Command_Prompt_Window_Is_Opened() == false)
+                                {
+                                    Command_Prompt_Tools CommandPrompt = new Command_Prompt_Tools();
+                                    CommandPrompt.Show();
+                                }
+                                else
+                                {
+                                    await Tools_Variables_Mitigator_Class.Activate_Command_Prompt_Window();
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        private void Reload_Page(object sender, RoutedEventArgs e)
+        {
+            if (Application.Current != null)
+            {
+                if (Application.Current.Dispatcher != null)
+                {
+                    if (Application.Current.Dispatcher.HasShutdownStarted == false)
+                    {
+                        if (Application.Current.MainWindow != null)
+                        {
+                            if (Window_Is_Closing == false)
+                            {
+                                main.CoreWebView2.Reload();
                             }
                         }
                     }

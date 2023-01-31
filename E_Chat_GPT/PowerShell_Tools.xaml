@@ -128,9 +128,9 @@
 
                     <Button.Content>
                         <StackPanel Margin="5" Orientation="Horizontal">
-                            <TextBlock FontFamily="Corbel" FontSize="18" Text="Error Check  "/>
+                            <TextBlock FontFamily="Corbel" FontSize="18" Text="Run Code  "/>
 
-                            <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xEB90;" FontSize="18" Margin="0,2,0,0" Foreground="Red"/>
+                            <TextBlock FontFamily="Segoe MDL2 Assets" Text="&#xF5B0;" FontSize="18" Margin="0,2,0,0" Foreground="Red"/>
                         </StackPanel>
                     </Button.Content>
 
