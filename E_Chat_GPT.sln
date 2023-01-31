@@ -5,6 +5,8 @@ VisualStudioVersion = 17.3.32825.248
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "E_Chat_GPT", "E_Chat_GPT\E_Chat_GPT.csproj", "{307A968C-DF60-436F-8EAC-8F9672DBF0F4}"
 EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Chat_GPT_Tools", "Chat_GPT_Tools\Chat_GPT_Tools.vdproj", "{1274EEE1-1D55-4CB0-9E0B-C6973F159049}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,8 @@ Global
 		{307A968C-DF60-436F-8EAC-8F9672DBF0F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{307A968C-DF60-436F-8EAC-8F9672DBF0F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{307A968C-DF60-436F-8EAC-8F9672DBF0F4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1274EEE1-1D55-4CB0-9E0B-C6973F159049}.Debug|Any CPU.ActiveCfg = Debug
+		{1274EEE1-1D55-4CB0-9E0B-C6973F159049}.Release|Any CPU.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

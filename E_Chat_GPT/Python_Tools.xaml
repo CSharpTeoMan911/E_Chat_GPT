@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:E_Chat_GPT"
         mc:Ignorable="d"
-        Title="Python_Tools" Height="450" Width="800" WindowStyle="None" AllowsTransparency="True" Opacity="0.95" Loaded="Window_Loaded" Closing="Window_Closing">
+        Title="Python Tool" Height="450" Width="800" WindowStyle="None" AllowsTransparency="True" Opacity="0.95" Loaded="Window_Loaded" Closing="Window_Closing">
 
     <Window.Background>
         <LinearGradientBrush StartPoint="0.5,1" EndPoint="0,1">

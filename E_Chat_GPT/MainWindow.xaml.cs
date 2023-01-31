@@ -483,5 +483,26 @@ namespace E_Chat_GPT
                 }
             }
         }
+
+        private void Open_Help_Page(object sender, RoutedEventArgs e)
+        {
+            if (Application.Current != null)
+            {
+                if (Application.Current.Dispatcher != null)
+                {
+                    if (Application.Current.Dispatcher.HasShutdownStarted == false)
+                    {
+                        if (Application.Current.MainWindow != null)
+                        {
+                            if (Window_Is_Closing == false)
+                            {
+                                Help_Page help_Page = new Help_Page();
+                                help_Page.ShowDialog();
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 }

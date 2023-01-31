@@ -74,8 +74,6 @@ namespace E_Chat_GPT
                     MessageBox msg = new MessageBox(Compilation_Errors);
                     msg.ShowDialog();
                 }
-
-                System.IO.File.Delete(compilation_output);
                 compiler.Dispose();
 
                 return Task.FromResult(true);

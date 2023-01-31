@@ -36,6 +36,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Accessibility" />
     <Reference Include="CustomMarshalers" />
@@ -177,6 +180,12 @@
     <Compile Include="Command_Prompt_Tools.xaml.cs">
       <DependentUpon>Command_Prompt_Tools.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Help_Page.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Help_Page.Designer.cs">
+      <DependentUpon>Help_Page.cs</DependentUpon>
+    </Compile>
     <Compile Include="MessageBox.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -248,6 +257,9 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <EmbeddedResource Include="Help_Page.resx">
+      <DependentUpon>Help_Page.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MessageBox.resx">
       <DependentUpon>MessageBox.cs</DependentUpon>
     </EmbeddedResource>
@@ -261,6 +273,7 @@
     <EmbeddedResource Include="Save_File_MessageBox.resx">
       <DependentUpon>Save_File_MessageBox.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="app.manifest" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -285,6 +298,12 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Python.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Chat_GPT_Tools_Logo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Chat_GPT_Tools_Logo_Icon.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
